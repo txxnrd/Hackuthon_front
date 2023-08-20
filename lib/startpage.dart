@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hackuton_front_flutter/searchpage.dart';
 
-class StartPage extends StatelessWidget {
+class StartPage extends StatefulWidget {
+  @override
+  _StartPageState createState() => _StartPageState();
+}
+
+class _StartPageState extends State<StartPage> {
+  String selectedPlace = "장소를 입력해주세요.";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,6 +23,7 @@ class StartPage extends StatelessWidget {
         ],
       ),
       body: Column(
+
         children: [
           Container(
             height: 280,
@@ -127,27 +136,82 @@ class StartPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 20), // 간격
-                      Container(
-                        width: 200,  // 원하는 너비로 설정
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10.0),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SearchPage()),
+                          );
+                        },
+                        child: Container(
+                          width: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10.0),
+                            ),
+                          ),
+                          padding: EdgeInsets.only(left: 17), // 원하는 마진값을 줍니다.
+                          child: Row(
+                            children: [
+                              Text(
+                                '장소를 입력해주세요.',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Spacer(),
+                              Icon(
+                                Icons.search,
+                                color: Colors.grey,
+                              )
+                            ],
                           ),
                         ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: '장소를 입력해주세요.',
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.only(left: 17), // 원하는 마진값을 줍니다.
-                          ),
-                        )
                       )
                     ],
                   ),
                 ),
 
-                SizedBox(height: 40),
+                SizedBox(height: 15),
+                Container(
+
+                  margin: EdgeInsets.only(left: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        '장소',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(width: 20), // 간격
+                        Container(
+                          width: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10.0),
+                            ),
+                          ),
+                          padding: EdgeInsets.only(left: 17), // 원하는 마진값을 줍니다.
+                          child: Row(
+                            children: [
+                              Text(
+                                '장소를 입력해주세요.',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15),
                 Container(
                   height: 40,
                   width: 100,
@@ -176,8 +240,11 @@ class StartPage extends StatelessWidget {
               ],
             ),
           ),
+
         ],
+
       ),
+
     );
   }
 }
