@@ -19,8 +19,9 @@ class DataPage extends StatelessWidget {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'username':username,
-        'session':session,
+        'month':selectedDate.month ,
+        'day':selectedDate.day ,
+        'place':_searchController.text,
       }),
     );
 
