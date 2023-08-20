@@ -74,8 +74,9 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ],
       ),
-      body: Column(
-        children: [
+      body: SingleChildScrollView(
+        child:Column(
+          children: [
           Container(
             margin: EdgeInsets.all(16.0),
             padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -96,7 +97,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           Container(
-            height: 100,
+            height: 60,
             width: 500,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -136,6 +137,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ],
       ),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         onPressed: () {
@@ -159,7 +161,6 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 }
-
 
 void main() {
   runApp(MaterialApp(

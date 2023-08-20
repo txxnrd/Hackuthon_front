@@ -23,7 +23,6 @@ class _StartPageState extends State<StartPage> {
         ],
       ),
       body: Column(
-
         children: [
           Container(
             height: 280,
