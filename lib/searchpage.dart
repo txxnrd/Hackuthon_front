@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';  // 추가
+
 
 class SearchPage extends StatelessWidget {
   @override
@@ -95,9 +97,16 @@ class SearchPage extends StatelessWidget {
                 ),
               ],
             ),
-          )
-
-
+          ),
+          Container(
+            height: 400,  // 높이는 원하는 대로 조절 가능
+            child: GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: LatLng(37.5665, 126.9780),  // 초기 위치 (서울)
+                zoom: 11,
+              ),
+            ),
+          ),
         ],
       ),
     );
