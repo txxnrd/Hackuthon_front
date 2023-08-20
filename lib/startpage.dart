@@ -14,16 +14,13 @@ class _StartPageState extends State<StartPage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              // 여기에 프로필 버튼을 눌렀을 때의 동작을 추가합니다.
-            },
-          ),
+
         ],
       ),
-      body: Column(
-        children: [
+      body:SingleChildScrollView(
+        child:Column(
+
+         children: [
           Container(
             height: 280,
             width: double.infinity,
@@ -144,6 +141,7 @@ class _StartPageState extends State<StartPage> {
                         },
                         child: Container(
                           width: 200,
+                          height: 40,
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.all(
@@ -210,11 +208,45 @@ class _StartPageState extends State<StartPage> {
               ],
             ),
           ),
+           Container(
+             margin: EdgeInsets.all(30),
+             width: double.infinity,
 
-        ],
+             child: Column(
+               crossAxisAlignment: CrossAxisAlignment.start, // 텍스트를 왼쪽 정렬
+               children: [
+                 Text(
+                   '지금 한적한 공원',
+                   style: TextStyle(
+                     fontSize: 20,
+                     fontWeight: FontWeight.bold,
+                   ),
+                 ),
+                 SizedBox(height: 20), // 텍스트와 이미지 사이의 간격
+                 Container(
+                   height: 200,  // 이 값을 조절하여 스크롤 영역의 높이를 설정할 수 있습니다.
+                   child: ListView(
+                     scrollDirection: Axis.horizontal,  // 수직 스크롤
+                     children: [
+                       Image.asset('assets/images/banpo.png', width: 120, height: 300,), // 첫 번째 이미지
+                       SizedBox(width: 20), // 이미지 사이의 간격
+                       Image.asset('assets/images/mang.png', width: 120, height: 300,), // 두 번째 이미지
+                       SizedBox(width: 20), // 이미지 사이의 간격
+                       Image.asset('assets/images/yangwha.png', width: 120, height: 300,), // 세 번째 이미지
+                     ],
+                   ),
+                 ),
+               ],
+             ),
+           ),
+
+
+
+
+         ],
 
       ),
-
+      )
     );
   }
 }

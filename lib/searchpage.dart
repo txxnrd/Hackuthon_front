@@ -68,10 +68,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {},
-          ),
+
         ],
       ),
       body: SingleChildScrollView(

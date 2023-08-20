@@ -6,20 +6,17 @@ class SchedulePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {},
-          ),
+
         ],
       ),
       body: Column(
         children: [
           Container(
-            height: 140,
+            height: 110,
             width: double.infinity,
             margin: EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Color(0xFFFF0000).withOpacity(0.27),
+              color: Color(0xFFFFBABA),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
@@ -67,8 +64,8 @@ class SchedulePage extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          width: 60,
-                          height: 30,
+                          width: 40,
+                          height: 24,
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.all(
@@ -79,15 +76,15 @@ class SchedulePage extends StatelessWidget {
                             child: Text(
                               '8',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 17,
                               ),
                             ),
                           ),
                         ),
                         SizedBox(width: 10),
                         Container(
-                          width: 60,
-                          height: 30,
+                          width: 40,
+                          height: 24,
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
                             borderRadius: BorderRadius.all(
@@ -98,7 +95,7 @@ class SchedulePage extends StatelessWidget {
                             child: Text(
                               '9',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 17,
                               ),
                             ),
                           ),
@@ -107,7 +104,7 @@ class SchedulePage extends StatelessWidget {
                     ),
                     SizedBox(height: 16),
                     Container(
-                      width: 200,
+                      width: 160,
                       height: 24,
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -116,7 +113,7 @@ class SchedulePage extends StatelessWidget {
                         ),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.only(left: 17),
+                        padding: EdgeInsets.only(left: 0),
                         child: Center(
                           child: Text(
                             '여의도 한강 공원',
@@ -133,8 +130,8 @@ class SchedulePage extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 16.0),
                   child: Image.asset(
                     'assets/images/mad.png',
-                    width: 50,
-                    height: 50,
+                    width: 62,
+                    height: 62,
                   ),
                 ),
               ],

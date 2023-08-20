@@ -71,6 +71,9 @@ flutter:
     - assets/images/current-data.png
     - assets/images/weather.png
     - assets/images/noonchi.png
+    - assets/images/mang.png
+    - assets/images/yangwha.png
+    - assets/images/banpo.png
 
   #   - images/a_dot_ham.jpeg
 
