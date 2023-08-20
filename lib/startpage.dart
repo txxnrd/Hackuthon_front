@@ -49,7 +49,6 @@ class StartPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16),
-
                 Container(
                   margin: EdgeInsets.only(left: 25.0),
                   child: Row(
@@ -62,37 +61,61 @@ class StartPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 20), // 간격
-                      DropdownButton<String>(
-                        items: <String>['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (_) {},
-                        hint: Container(
-                          color: Colors.grey[200],
-                          child: Text('월'),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],  // 회색 배경
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
+                        ),
+                        child: DropdownButton<String>(
+                          underline: SizedBox.shrink(),  // 밑줄 제거
+                          items: <String>['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (_) {},
+                          hint: Row(
+                            children: [
+                              SizedBox(width: 10),  // 여기에서 원하는 마진 크기를 설정하세요.
+                              Text("월")
+                            ],
+                          ),
                         ),
                       ),
-                      DropdownButton<String>(
-                        items: <String>['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (_) {},
-                        hint: Container(
-                          color: Colors.grey[200],
-                          child: Text('일'),
+                      SizedBox(width: 10,),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],  // 회색 배경
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
                         ),
-                      ),
+                        child: DropdownButton<String>(
+                          underline: SizedBox.shrink(),  // 밑줄 제거
+                          items: <String>['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (_) {},
+                          hint: Row(
+                            children: [
+                              SizedBox(width: 10),  // 여기에서 원하는 마진 크기를 설정하세요.
+                              Text("일")
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
                 SizedBox(height: 16),
                 Container(
+
                   margin: EdgeInsets.only(left: 25.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -104,34 +127,53 @@ class StartPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 20), // 간격
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: '날짜 입력',
+                      Container(
+                        width: 200,  // 원하는 너비로 설정
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10.0),
+                          ),
                         ),
-                      ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: '장소를 입력해주세요.',
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(left: 17), // 원하는 마진값을 줍니다.
+                          ),
+                        )
+                      )
                     ],
                   ),
                 ),
+
                 SizedBox(height: 40),
                 Container(
                   height: 40,
                   width: 100,
                   margin: EdgeInsets.only(left: 200),
                   alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                  ),
-                  onPressed: () {
-                    // 추가하기 버튼을 눌렀을 때의 동작을 추가합니다.
-                  },
-                  child: Text('추가하기',
-                    style: TextStyle(
-                      fontSize: 14
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,  // 버튼의 배경 색을 흰색으로 설정
+                      onPrimary: Colors.blue,  // 버튼의 글자 색을 하늘색으로 설정
+                      side: BorderSide(color: Colors.blue, width: 2),  // 테두리 색과 두께 설정
+                      shape: RoundedRectangleBorder(  // 테두리 둥글게 설정
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      // 추가하기 버튼을 눌렀을 때의 동작을 추가합니다.
+                    },
+                    child: Text(
+                      '추가하기',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
                     ),
                   ),
-                ),
-                ),
+                )
+
               ],
             ),
           ),
