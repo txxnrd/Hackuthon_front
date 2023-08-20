@@ -65,8 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
             label: '홈',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: '검색',
+            icon: Icon(Icons.calendar_month),
+            label: '일정',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),

@@ -102,7 +102,7 @@ class DataPage extends StatelessWidget {
 
                 Container(
                   margin: EdgeInsets.all(16),
-                  height: 100,
+                  height: 300,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -114,6 +114,37 @@ class DataPage extends StatelessWidget {
                         offset: Offset(0, 3),
                       ),
                     ],
+                  ),
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/ago-data.png', // 이미지 경로
+                      width: 300, // 이미지 너비 (선택 사항)
+                      height: 350, // 이미지 높이 (선택 사항)
+                    ),
+                  ),
+                ),
+
+                Container(
+                  margin: EdgeInsets.all(16),
+                  height: 300,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/current-data.png', // 이미지 경로
+                      width: 300, // 이미지 너비 (선택 사항)
+                      height: 350, // 이미지 높이 (선택 사항)
+                    ),
                   ),
                 ),
                 Container(
@@ -131,21 +162,12 @@ class DataPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(16),
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 7,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/weather.png', // 이미지 경로
+                      width: 300, // 이미지 너비 (선택 사항)
+                      height: 100, // 이미지 높이 (선택 사항)
+                    ),
                   ),
                 ),
                 Container(
