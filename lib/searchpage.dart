@@ -67,10 +67,9 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-
-        ],
+        title: Image.asset('assets/images/logo.png', fit: BoxFit.cover, height: 30,),
       ),
+
       body: SingleChildScrollView(
         child:Column(
           children: [
