@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'data.dart';  // Data.dart 파일에서 DataPage를 import
 
 class SearchPage extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   GoogleMapController? _mapController;
   TextEditingController _searchController = TextEditingController();
-
+  DateTime? selectedDate;
   String googleAPIKey = "AIzaSyDMTx4E4-eVsH4OGR2cNdidSLmcMEyKT1c"; // Google API 키를 여기에 입력해 주세요.
 
   LatLng _initialPosition = LatLng(37.5665, 126.9780); // 초기 위치
@@ -49,7 +50,18 @@ class _SearchPageState extends State<SearchPage> {
     }
 
   }
-
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,72 +116,7 @@ class _SearchPageState extends State<SearchPage> {
               },
             ),
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(top: 8, left: 25),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Text(
-              '최근 검색어',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 14,
-              ),
-            ),
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(top: 0, left: 40),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, // 가로축 정렬
-              children: [
-                Text(
-                  '에버랜드',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                ),
-                IconButton(
 
-                  icon: Icon(Icons.close), // 'x' 아이콘
-                  onPressed: () {
-                    // 'x' 버튼을 눌렀을 때의 동작을 여기에 작성합니다.
-                  },
-                ),
-              ],
-            ),
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(top: 0, left: 40),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, // 가로축 정렬
-              children: [
-                Text(
-                  '여의도 한강공원',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                ),
-                IconButton(
-                  padding: EdgeInsets.all(2.0),
-                  icon: Icon(Icons.close), // 'x' 아이콘
-                  onPressed: () {
-                    // 'x' 버튼을 눌렀을 때의 동작을 여기에 작성합니다.
-                  },
-                ),
-              ],
-            ),
-          ),
           Container(
             height: 400,
             child: GoogleMap(
@@ -180,14 +127,35 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ),
+          SizedBox(height: 30,),
+          Container(
+            child: ElevatedButton(
+              onPressed: () => _selectDate(context),
+              child: Text(selectedDate == null ? '날짜 선택' : '${selectedDate!.toLocal()}'.split(' ')[0]),
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         onPressed: () {
-          Navigator.pop(context, _searchController.text);
+          if (_searchController.text.isNotEmpty && selectedDate != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DataPage(
+                  location: _searchController.text,
+                  date: selectedDate!,
+                ),
+              ),
+            );
+          } else {
+            // 경고 메시지를 표시하거나 다른 처리를 할 수 있습니다.
+            print("위치와 날짜를 모두 선택해주세요.");
+          }
         },
       ),
+
     );
   }
 }

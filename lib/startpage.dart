@@ -7,7 +7,7 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
-  String selectedPlace = "장소를 입력해주세요.";
+  String? searchText;
 
   @override
   Widget build(BuildContext context) {
@@ -179,36 +179,7 @@ class _StartPageState extends State<StartPage> {
                   margin: EdgeInsets.only(left: 25.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        '장소',
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      SizedBox(width: 20), // 간격
-                        Container(
-                          width: 200,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                          padding: EdgeInsets.only(left: 17), // 원하는 마진값을 줍니다.
-                          child: Row(
-                            children: [
-                              Text(
-                                '장소를 입력해주세요.',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
 
-                    ],
                   ),
                 ),
                 SizedBox(height: 15),
