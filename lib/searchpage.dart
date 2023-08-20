@@ -4,8 +4,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'data.dart';  // Data.dart 파일에서 DataPage를 import
 import 'dart:convert';
-import 'dart:io';
-import 'package:dio/dio.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -144,16 +142,18 @@ class _SearchPageState extends State<SearchPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         onPressed: () {
-
-          var dio=Dio();
-          var response = await dio.post(
-            'http://192.168.0.121:5000/add',
-            data: FormData.fromMap({
-                'month':selectedDate.month ,
-                'day':selectedDate.day ,
-                'place':_searchController.text,
-            })
-          );
+          
+          final response = http.post(
+            Uri.parse('http://192.168.0.121:5000/add'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, String>{
+              'month':selectedDate.month ,
+              'day':selectedDate.day ,
+              'place':_searchController.text,
+            }),
+          );    
 
           if (_searchController.text.isNotEmpty && selectedDate != null) {
             Navigator.push(
