@@ -61,7 +61,7 @@ class SearchPage extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  padding: EdgeInsets.all(2.0),
+
                   icon: Icon(Icons.close), // 'x' 아이콘
                   onPressed: () {
                     // 'x' 버튼을 눌렀을 때의 동작을 여기에 작성합니다.
