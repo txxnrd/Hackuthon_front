@@ -2,30 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class DataPage extends StatelessWidget {
   final String location;
   final DateTime date;
 
-  DataPage(required location, required date){
-    this.location = location;
-    this.date = date;
+  DataPage({required this.location, required this.date}){
 
-    var username = 'HackKuthon2023'
-    var session = ''
-    var response = await http.post(
+    var username = 'HackKuthon2023';
+    var session = '';
+    final http.Response response = await http.post(
       Uri.parse('http://192.168.0.121:5000/get_place_data'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'month':selectedDate.month ,
-        'day':selectedDate.day ,
-        'place':_searchController.text,
+        'date':date.toString() ,
+        'place':location,
       }),
     );
 
-    String responseBody = utf8.decode(response.bodyBytes);
+    String responseBody = jsonDecode(response.body);
     List<dynamic> list = jsonDecode(responseBody);
     print(list);
   };

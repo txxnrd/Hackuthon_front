@@ -149,10 +149,11 @@ class _SearchPageState extends State<SearchPage> {
               'Content-Type': 'application/json; charset=UTF-8',
             },
             body: jsonEncode(<String, String>{
-              'month':selectedDate.month ,
-              'day':selectedDate.day ,
-              'place':_searchController.text,
-            }),
+              'month': selectedDate?.month?.toString() ?? 'defaultMonth',
+              'day': selectedDate?.day?.toString() ?? 'defaultDay',
+              'place': _searchController.text,
+            })
+            ,
           );    
 
           if (_searchController.text.isNotEmpty && selectedDate != null) {
