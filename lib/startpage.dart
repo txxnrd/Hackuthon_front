@@ -173,7 +173,6 @@ class StartPage extends StatelessWidget {
                     ),
                   ),
                 )
-
               ],
             ),
           ),

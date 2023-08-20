@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackuton_front_flutter/searchpage.dart';
 import 'package:hackuton_front_flutter/startpage.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: StartPage(),
+      home: MyHomePage(title: 'My home page'),
     );
   }
 }
@@ -32,64 +33,64 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int _selectedIndex = 0;
 
   void _incrementCounter() {
     setState(() {
       _counter++;
     });
   }
+  final List<Widget> _widgetOptions = <Widget>[
+    StartPage(),
+    SearchPage(),
+    StartPage(),
+  ];
 
-  void _resetCounter() {
+  void _onItemTapped(int index) {
     setState(() {
-      _counter = 0;
+      _selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+      body: SafeArea(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              '이게 너가 누른 횟수임',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: Stack(
-        children: <Widget>[
-          Positioned(
-            bottom: 16,
-            right: 16,
-            child: FloatingActionButton(
-              onPressed: _incrementCounter,
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
-            ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '홈',
           ),
-          Positioned(
-            bottom: 16,
-            left: 50,
-            child: FloatingActionButton(
-              onPressed: _resetCounter,
-              tooltip: 'Reset',
-              child: const Icon(Icons.refresh),
-            ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: '검색',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: '마이페이지',
           ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
       ),
     );
   }
-}
 
+  @override
+  void initState() {
+    //해당 클래스가 호출되었을떄
+    super.initState();
+
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+}
 
