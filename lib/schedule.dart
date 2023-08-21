@@ -316,8 +316,8 @@ class _SchedulePageState extends State<SchedulePage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('인증완료'),
-                                content: Text('인증이 완료되었습니다.'),
+                                title: Text('방문인증'),
+                                content: Text('리워드 200P 지급 완료!'),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
