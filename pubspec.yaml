@@ -33,9 +33,11 @@ dependencies:
     sdk: flutter
   share: ^2.0.4
   fl_chart: ^0.63.0
+  flutter_native_splash: ^2.2.19
   flutter_naver_map: ^1.0.2
   http: ^0.13.3
   google_maps_flutter: ^2.0.1
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -76,6 +78,7 @@ flutter:
     - assets/images/yangwha.png
     - assets/images/banpo.png
     - assets/images/logo.png
+    - assets/images/splash.gif
 
   #   - images/a_dot_ham.jpeg
 
@@ -90,6 +93,7 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  # fonts:
   # fonts:
   #   - family: Schyler
   #     fonts:

@@ -3,6 +3,7 @@ import 'package:hackuton_front_flutter/mypage.dart';
 import 'package:hackuton_front_flutter/schedule.dart';
 import 'package:hackuton_front_flutter/searchpage.dart';
 import 'package:hackuton_front_flutter/startpage.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() {
   runApp(const MyApp());

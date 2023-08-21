@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:fl_chart/fl_chart.dart';
 
+int convertDateToInt(DateTime date) {
+  return date.year * 10000 + date.month * 100 + date.day;
+}
 class DataPage extends StatefulWidget {
   String location;
   final DateTime date;
@@ -17,8 +20,8 @@ class DataPage extends StatefulWidget {
 
 class _DataPageState extends State<DataPage> {
   var status;
-  var past_data;
   var user_data;
+  var past_data;
   var weather;
 
 
@@ -174,14 +177,14 @@ class _DataPageState extends State<DataPage> {
                 ),
 
                 Container(
-                  margin: EdgeInsets.all(16),
-                  height: 300,
+                  margin: EdgeInsets.all(16),  // 여기에 마진을 추가했습니다.
+                  height: 320,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: Colors.grey.withOpacity(0.5 ),
                         spreadRadius: 2,
                         blurRadius: 7,
                         offset: Offset(0, 3),
@@ -189,49 +192,82 @@ class _DataPageState extends State<DataPage> {
                     ],
                   ),
                   child: Center(
-                    child: FutureBuilder(
-                      future: _searchPlace(),  // _searchPlace 메서드를 여기에 넣습니다.
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          return BarChart(
-                            BarChartData(
-                              barGroups: [
-                                BarChartGroupData(
-                                  x: -3,
-                                  barRods: [
-                                    BarChartRodData(color: Colors.blue, toY: past_data[-3]?.toDouble() ?? 0.0)
-                                  ],
-                                ),
-                                BarChartGroupData(
-                                  x: -2,
-                                  barRods: [
-                                    BarChartRodData(color: Colors.blue, toY: past_data[-2]?.toDouble() ?? 0.0)
-                                  ],
-                                ),
-                                // ... 나머지 데이터도 이런 식으로 추가
-                              ],
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  ),
+                    child: past_data != null ? BarChart(
+                      BarChartData(
 
+                        barGroups: [
+                          BarChartGroupData(
+                            x: -3,
+                            barRods: [
+                              BarChartRodData(color: Color(0xFFD9D9D9),borderRadius: BorderRadius.circular(4), width: 20, toY: (past_data['-3'] ?? 0).toDouble()),
+                            ],
+                          ),
+                          BarChartGroupData(
+                            x: -2,
+                            barRods: [
+                              BarChartRodData(color: Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(4),width: 20,toY: (past_data['-2'] ?? 0).toDouble()),
+                            ],
+                          ),
+                          BarChartGroupData(
+                            x: -1,
+                            barRods: [
+                              BarChartRodData(color: Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(4),width: 20,toY: (past_data['-1'] ?? 0).toDouble()),
+                            ],
+                          ),
+                          BarChartGroupData(
+                            x: 0,
+                            barRods: [
+                              BarChartRodData(color:Color(0xFFFFD7D7),width: 20,borderRadius: BorderRadius.circular(4),
+                                  toY: (past_data['0'] ?? 0).toDouble()),
+                            ],
+                          ),
+                          BarChartGroupData(
+                            x: 1,
+                            barRods: [
+                              BarChartRodData(color:Color(0xFF7190FF),borderRadius: BorderRadius.circular(4),width: 20, toY: (past_data['1'] ?? 0).toDouble()),
+                            ],
+                          ),
+                          BarChartGroupData (
+                            x: 2,
+                            barRods: [
+                              BarChartRodData(color: Color(0xFFD9D9D9),borderRadius: BorderRadius.circular(4),width: 20, toY: (past_data['2'] ?? 0).toDouble()),
+                            ],
+                          ),
+                        ],
+                        gridData: FlGridData(show: false),  // 그리드를 숨겼습니다.
+                        borderData: FlBorderData(
+                          show: true,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey,
+                              width: 0.5,
+                            ),
+                            left: BorderSide(
+                              color: Colors.grey,
+                              width: 0.5,
+                            ),
+                            right: BorderSide(
+                              color: Colors.white,
+                            ),
+                            top: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ) : CircularProgressIndicator(),  // 데이터가 null일 경우 로딩 인디케이터를 표시합니다.
+                  ),
                 ),
 
                 Container(
-                  margin: EdgeInsets.all(16),
-                  height: 300,
+                  margin: EdgeInsets.all(16),  // 여기에 마진을 추가했습니다.
+                  height: 320,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
+                        color: Colors.grey.withOpacity(0.5 ),
                         spreadRadius: 2,
                         blurRadius: 7,
                         offset: Offset(0, 3),
@@ -239,11 +275,70 @@ class _DataPageState extends State<DataPage> {
                     ],
                   ),
                   child: Center(
-                    child: Image.asset(
-                      'assets/images/current-data.png', // 이미지 경로
-                      width: 300, // 이미지 너비 (선택 사항)
-                      height: 350, // 이미지 높이 (선택 사항)
-                    ),
+                    child: user_data != null ? BarChart(
+                      BarChartData(
+
+                        barGroups: [
+                          BarChartGroupData(
+                            x: -3,
+                            barRods: [
+                              BarChartRodData(color: Color(0xFFD9D9D9),borderRadius: BorderRadius.circular(4), width: 20, toY: (user_data['-3'] ?? 0).toDouble()),
+                            ],
+                          ),
+                          BarChartGroupData(
+                            x: -2,
+                            barRods: [
+                              BarChartRodData(color: Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(4),width: 20,toY: (user_data['-2'] ?? 0).toDouble()),
+                            ],
+                          ),
+                          BarChartGroupData(
+                            x: -1,
+                            barRods: [
+                              BarChartRodData(color: Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(4),width: 20,toY: (user_data['-1'] ?? 0).toDouble()),
+                            ],
+                          ),
+                          BarChartGroupData(
+                            x: 0,
+                            barRods: [
+                              BarChartRodData(color:Color(0xFFFFD7D7),width: 20,borderRadius: BorderRadius.circular(4),
+                                  toY: (user_data['0'] ?? 0).toDouble()),
+                            ],
+                          ),
+                          BarChartGroupData(
+                            x: 1,
+                            barRods: [
+                              BarChartRodData(color:Color(0xFF7190FF),borderRadius: BorderRadius.circular(4),width: 20, toY: (user_data['1'] ?? 0).toDouble()),
+                            ],
+                          ),
+                          BarChartGroupData (
+                            x: 2,
+                            barRods: [
+                              BarChartRodData(color: Color(0xFFD9D9D9),borderRadius: BorderRadius.circular(4),width: 20, toY: (user_data['2'] ?? 0).toDouble()),
+                            ],
+                          ),
+                        ],
+                        gridData: FlGridData(show: false),  // 그리드를 숨겼습니다.
+                        borderData: FlBorderData(
+                          show: true,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey,
+                              width: 0.5,
+                            ),
+                            left: BorderSide(
+                              color: Colors.grey,
+                              width: 0.5,
+                            ),
+                            right: BorderSide(
+                              color: Colors.white,
+                            ),
+                            top: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ) : CircularProgressIndicator(),  // 데이터가 null일 경우 로딩 인디케이터를 표시합니다.
                   ),
                 ),
                 Container(
