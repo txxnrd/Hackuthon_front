@@ -1,17 +1,15 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hackuton_front_flutter/mypage.dart';
 import 'package:hackuton_front_flutter/schedule.dart';
 import 'package:hackuton_front_flutter/searchpage.dart';
 import 'package:hackuton_front_flutter/startpage.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,13 +19,45 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: MyHomePage(title: 'My home page'),
+      home: SplashScreen(),
     );
   }
 }
 
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+      Duration(seconds: 5),
+          () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(title: 'My home page'),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFF7190FF),  // 배경색 설정
+      body: Center(
+        child: Image.asset('assets/images/splash.gif'),
+      ),
+    );
+  }
+}
+
+
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  MyHomePage({required this.title});
   final String title;
 
   @override
@@ -35,14 +65,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   int _selectedIndex = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
   final List<Widget> _widgetOptions = <Widget>[
     StartPage(),
     SchedulePage(),
@@ -82,18 +105,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
-  @override
-  void initState() {
-    //해당 클래스가 호출되었을떄
-    super.initState();
-
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
 }
-
