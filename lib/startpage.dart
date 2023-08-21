@@ -20,7 +20,7 @@ class _StartPageState extends State<StartPage> {
 
          children: [
           Container(
-            height: 280,
+            height: 190,
             width: double.infinity,
             margin: EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -41,12 +41,12 @@ class _StartPageState extends State<StartPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 25.0),  // 왼쪽 마진 설정
+                  margin: EdgeInsets.only(left: 25.0,top: 13),  // 왼쪽 마진 설정
                   alignment: Alignment.centerLeft,  // 왼쪽 정렬
                   child: Text(
                     '언제 어디로 놀러가시나요?',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -65,6 +65,7 @@ class _StartPageState extends State<StartPage> {
                       ),
                       SizedBox(width: 20), // 간격
                       Container(
+                        height: 30,
                         decoration: BoxDecoration(
                           color: Colors.grey[200],  // 회색 배경
                           borderRadius: BorderRadius.all(
@@ -90,6 +91,7 @@ class _StartPageState extends State<StartPage> {
                       ),
                       SizedBox(width: 10,),
                       Container(
+                        height: 30,
                         decoration: BoxDecoration(
                           color: Colors.grey[200],  // 회색 배경
                           borderRadius: BorderRadius.all(
@@ -178,31 +180,7 @@ class _StartPageState extends State<StartPage> {
                   ),
                 ),
                 SizedBox(height: 15),
-                Container(
-                  height: 40,
-                  width: 100,
-                  margin: EdgeInsets.only(left: 200),
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,  // 버튼의 배경 색을 흰색으로 설정
-                      onPrimary: Colors.blue,  // 버튼의 글자 색을 하늘색으로 설정
-                      side: BorderSide(color: Colors.blue, width: 2),  // 테두리 색과 두께 설정
-                      shape: RoundedRectangleBorder(  // 테두리 둥글게 설정
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      // 추가하기 버튼을 눌렀을 때의 동작을 추가합니다.
-                    },
-                    child: Text(
-                      '추가하기',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                )
+
               ],
             ),
           ),

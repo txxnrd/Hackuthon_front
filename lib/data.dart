@@ -3,72 +3,98 @@ import 'package:share/share.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+import 'package:fl_chart/fl_chart.dart';
 
-
-class DataPage extends StatelessWidget {
-  final String location;
+class DataPage extends StatefulWidget {
+  String location;
   final DateTime date;
+
+  DataPage({required this.location, required this.date});
+
+  @override
+  _DataPageState createState() => _DataPageState();
+}
+
+class _DataPageState extends State<DataPage> {
   var status;
   var past_data;
   var user_data;
   var weather;
 
-  DataPage({required this.location, required this.date}){
 
+  @override
+  void initState() {
+    super.initState();
+    _searchPlace();
+  }
 
-    Future<void> _searchPlace() async {
+  Future<void> _searchPlace() async {
     String url =
-        'http://192.168.0.121:5000/get_place_data?date=${date.toString()}&place=$location';
+        'http://192.168.0.121:5000/get_place_data?date=${widget.date.toString()}&place=${widget.location}';
 
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       Map<String, dynamic> result = json.decode(response.body);
       print('Result from Google API: $result');  // 결과 로깅
 
-      // 결과 배열이 비어있는지 확인
       if (result['status'].isNotEmpty) {
-        this.status = result['status'];
-        this.past_data = result['past_data'];
-        this.user_data = result['user_data'];
-        this.weather = result['weather'];
+        setState(() {
+          this.status = result['status'];
+          this.past_data = result['past_data'];
+          this.user_data = result['user_data'];
+          this.weather = result['weather'];
+        });
+        print(result);
       } else {
-        print('No candidates found');  // 결과가 없을 경우 로깅
+        print('No candidates found');
       }
     } else {
       print('Failed to search for place');
     }
-
-  }
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('데이터 '),
+        title: Text(
+          '데이터',
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Divider(
+            height: 1.0,
+            thickness: .3,
+            color: Colors.grey,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
-        children: [
-          // 상단에 위치와 날짜를 표시
-          Container(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '장소: $location',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height:10),
-                Text(
-                  '날짜: ${date.toLocal().toString().split(' ')[0]}',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-              ],
+          children: [
+            // 상단에 위치와 날짜를 표시
+            Container(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(width: 0.1,),
+                  Text(
+                    '장소: ${widget.location}',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 5,),
+                  Text(
+                    '날짜: ${widget.date.toLocal().toString().split(' ')[0]}',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 5,),
+                ],
+              ),
             ),
-          ),
           // 하단에 두 개의 흰색 컨테이너
           Container(
             child: Column(
@@ -110,26 +136,38 @@ class DataPage extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          top: 40, //
-                          left: 116, // 왼쪽 여백을 16으로 설정
-                          child: Text(
-                            '띠로리! 눈치게임 대실패.',
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                          top: 40,
+                          left: 0,
+                          right: 0, // left와 right를 0으로 설정하여 가로로 꽉 차게 만듭니다.
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              status == 'happy' ? '딩동댕동! 눈치게임 대성공!' :
+                              status == 'mad' ? '띠로리! 눈치게임 대실패.' :
+                              '눈치게임 보통.',
+                              style: TextStyle(
+                                color: status == 'happy' ? Colors.blue :
+                                status == 'mad' ? Colors.red :
+                                Colors.orange,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center, // 텍스트를 가운데 정렬합니다.
                             ),
                           ),
                         ),
                         Positioned(
-                          bottom: 40, // 아래쪽 위치 설정
-                          right: 90, // 오른쪽 위치 설정
+                          bottom: 40,
+                          right: 90,
                           child: Image.asset(
-                            'assets/images/mad.png', // 이미지 경로
-                            width: 200, // 이미지 너비
-                            height: 200, // 이미지 높이
+                            status == 'happy' ? 'assets/images/happy.png' :
+                            status == 'mad' ? 'assets/images/mad.png' :
+                            'assets/images/soso.png',
+                            width: 200,
+                            height: 200,
                           ),
                         ),
+
                       ],
                     )
                   ],
@@ -151,12 +189,38 @@ class DataPage extends StatelessWidget {
                     ],
                   ),
                   child: Center(
-                    child: Image.asset(
-                      'assets/images/ago-data.png', // 이미지 경로
-                      width: 300, // 이미지 너비 (선택 사항)
-                      height: 350, // 이미지 높이 (선택 사항)
+                    child: FutureBuilder(
+                      future: _searchPlace(),  // _searchPlace 메서드를 여기에 넣습니다.
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return BarChart(
+                            BarChartData(
+                              barGroups: [
+                                BarChartGroupData(
+                                  x: -3,
+                                  barRods: [
+                                    BarChartRodData(color: Colors.blue, toY: past_data[-3]?.toDouble() ?? 0.0)
+                                  ],
+                                ),
+                                BarChartGroupData(
+                                  x: -2,
+                                  barRods: [
+                                    BarChartRodData(color: Colors.blue, toY: past_data[-2]?.toDouble() ?? 0.0)
+                                  ],
+                                ),
+                                // ... 나머지 데이터도 이런 식으로 추가
+                              ],
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ),
+
                 ),
 
                 Container(
@@ -223,7 +287,10 @@ class DataPage extends StatelessWidget {
                   child: Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        Share.share('공유할 내용을 여기에 작성하세요.');
+                        Share.share('[띠로리! 눈치 게임 대실패.]\n '
+                            '이 날에는 ${widget.location}에 703명이 이곳에 올 예정이에요\n'
+                            '과거 이날에는 830명이 이곳을 방문했어요.\n'
+                        '날씨는 31도로 조금 더울 예정이에요.');
                       },
                       child: Text(
                         '공유하기',
