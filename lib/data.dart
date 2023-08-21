@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:async';
 import 'dart:convert';
 
 class DataPage extends StatelessWidget {
@@ -13,7 +14,7 @@ class DataPage extends StatelessWidget {
     var username = 'HackKuthon2023';
     var session = '';
     final http.Response response = await http.post(
-      Uri.parse('http://192.168.0.121:5000/get_place_data'),
+      'http://192.168.0.121:5000/get_place_data',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
