@@ -8,8 +8,7 @@ class SchedulePage extends StatefulWidget {
 }
 
 class _SchedulePageState extends State<SchedulePage> {
-  var len;
-  var datas;
+  List<Map<String, dynamic>> datas = [];
 
   @override
   void initState() {
@@ -19,28 +18,18 @@ class _SchedulePageState extends State<SchedulePage> {
 
   Future<void> _searchPlace() async {
     var username = 'HackKuthon2023';
-    String url =
-        'http://192.168.0.121:5000/list?username={$username}';
+    String url = 'http://192.168.0.121:5000/list?username={$username}';
 
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       Map<String, dynamic> result = json.decode(response.body);
-      print(result);  // 결과 로깅
-
-      // if (result[0].isNotEmpty) {
-      //   setState(() {
-      //     this.len = result.length;
-      //     this.datas = result;
-      //   });
-      //   print(result);
-      // } else {
-      //   print('No candidates found');
-      // }
+      setState(() {
+        datas = List<Map<String, dynamic>>.from(result.values);
+      });
     } else {
       print('Failed to search for place');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +37,15 @@ class _SchedulePageState extends State<SchedulePage> {
       appBar: AppBar(
         title: Image.asset('assets/images/logo.png', fit: BoxFit.cover, height: 30,),
       ),
-      body: Column(
-        children: [
-          Container(
+      body: ListView.builder(
+        itemCount: datas.length,
+        itemBuilder: (context, index) {
+          var data = datas[index];
+          return Container(
             height: 110,
-            width: double.infinity,
             margin: EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Color(0xFFFFBABA),
+              color: data['status'] == 'happy' ? Color(0xffB8C7FF   ) : data['status'] == 'soso' ? Color(0xfffffb90) : Color(0xffFFBABA ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
@@ -98,7 +88,7 @@ class _SchedulePageState extends State<SchedulePage> {
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,  // 왼쪽 정렬
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -113,7 +103,7 @@ class _SchedulePageState extends State<SchedulePage> {
                           ),
                           child: Center(
                             child: Text(
-                              '8',
+                              '${data['month']}',
                               style: TextStyle(
                                 fontSize: 17,
                               ),
@@ -132,7 +122,7 @@ class _SchedulePageState extends State<SchedulePage> {
                           ),
                           child: Center(
                             child: Text(
-                              '9',
+                              '${data['day']}',
                               style: TextStyle(
                                 fontSize: 17,
                               ),
@@ -151,14 +141,11 @@ class _SchedulePageState extends State<SchedulePage> {
                           Radius.circular(10.0),
                         ),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 0),
-                        child: Center(
-                          child: Text(
-                            '여의도 한강 공원',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
+                      child: Center(
+                        child: Text(
+                          '${data['place']}',
+                          style: TextStyle(
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -168,15 +155,15 @@ class _SchedulePageState extends State<SchedulePage> {
                 Padding(
                   padding: const EdgeInsets.only(right: 16.0),
                   child: Image.asset(
-                    'assets/images/mad.png',
+                    'assets/images/${data['status']}.png',
                     width: 62,
                     height: 62,
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
