@@ -16,8 +16,8 @@ class SchedulePage extends StatelessWidget {
 
       if (result[0].isNotEmpty) {
         setState(() {
-          this.len = result.length;
-          this.datas = result;
+          this.len = result.length;// 보여야 할 것들
+          this.datas = result;//0~len-1까지, 
         });
         print(result);
       } else {
