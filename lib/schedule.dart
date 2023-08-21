@@ -1,6 +1,34 @@
 import 'package:flutter/material.dart';
 
 class SchedulePage extends StatelessWidget {
+  var len;
+  var datas;
+
+  Future<void> _searchPlace() async {
+    username = 'HackKuthon2023'
+    String url =
+        'http://192.168.0.121:5000/list?username=$username';
+
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      Map<String, dynamic> result = json.decode(response.body);
+      print('Result from Google API: $result');  // 결과 로깅
+
+      if (result[0].isNotEmpty) {
+        setState(() {
+          this.len = result.length;
+          this.datas = result;
+        });
+        print(result);
+      } else {
+        print('No candidates found');
+      }
+    } else {
+      print('Failed to search for place');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
