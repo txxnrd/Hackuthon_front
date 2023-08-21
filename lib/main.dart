@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hackuton_front_flutter/mypage.dart';
+import 'package:hackuton_front_flutter/schedule.dart';
 import 'package:hackuton_front_flutter/searchpage.dart';
 import 'package:hackuton_front_flutter/startpage.dart';
 
@@ -42,8 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   final List<Widget> _widgetOptions = <Widget>[
     StartPage(),
-    SearchPage(),
-    StartPage(),
+    SchedulePage(),
+    MyPage(),
   ];
 
   void _onItemTapped(int index) {
