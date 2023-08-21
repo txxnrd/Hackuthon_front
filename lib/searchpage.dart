@@ -51,6 +51,13 @@ class _SearchPageState extends State<SearchPage> {
     }
 
   }
+  Future<void> _sendPlace() async {
+    String url =
+        'http://192.168.0.121:5000/add?date=${selectedDate.toString()}&place=${_searchController.text}';
+
+    final response = await http.get(Uri.parse(url));
+
+  }
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -142,20 +149,7 @@ class _SearchPageState extends State<SearchPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         onPressed: () {
-          
-          final response = http.post(
-            Uri.parse('http://192.168.0.121:5000/add'),
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: jsonEncode(<String, String>{
-              'month': selectedDate?.month?.toString() ?? 'defaultMonth',
-              'day': selectedDate?.day?.toString() ?? 'defaultDay',
-              'place': _searchController.text,
-            })
-            ,
-          );    
-
+          _sendPlace();
           if (_searchController.text.isNotEmpty && selectedDate != null) {
             Navigator.push(
               context,
@@ -170,6 +164,7 @@ class _SearchPageState extends State<SearchPage> {
             // 경고 메시지를 표시하거나 다른 처리를 할 수 있습니다.
             print("위치와 날짜를 모두 선택해주세요.");
           }
+
         },
       ),
 
