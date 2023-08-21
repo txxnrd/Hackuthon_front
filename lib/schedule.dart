@@ -9,6 +9,7 @@ class SchedulePage extends StatefulWidget {
 
 class _SchedulePageState extends State<SchedulePage> {
   List<Map<String, dynamic>> datas = [];
+  bool showListView = true;  // 추가된 부분
 
   @override
   void initState() {
@@ -37,140 +38,164 @@ class _SchedulePageState extends State<SchedulePage> {
       appBar: AppBar(
         title: Image.asset('assets/images/logo.png', fit: BoxFit.cover, height: 30,),
       ),
-      body: ListView.builder(
-        itemCount: datas.length,
-        itemBuilder: (context, index) {
-          var data = datas[index];
-          return Container(
-            height: 110,
-            margin: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: data['status'] == 'happy' ? Color(0xffB8C7FF   ) : data['status'] == 'soso' ? Color(0xfffffb90) : Color(0xffFFBABA ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 7,
-                  offset: Offset(0, 3),
-                ),
-              ],
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.0),
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    showListView = true;
+                  });
+                },
+                child: Text("남은 일정"),
               ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,  // 왼쪽 정렬
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 25.0),
-                      child: Text(
-                        '날짜',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    showListView = false;
+                  });
+                },
+                child: Text("방문 완료"),
+              ),
+            ],
+          ),
+          Expanded(
+            child: showListView
+                ? ListView.builder(
+              itemCount: datas.length,
+              itemBuilder: (context, index) {
+
+                var data = datas[index];
+                return Container(
+                  height: 110,
+                  margin: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: data['status'] == 'happy' ? Color(0xffB8C7FF   ) : data['status'] == 'soso' ? Color(0xfffffb90) : Color(0xffFFBABA ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
                       ),
+                    ],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
                     ),
-                    SizedBox(height: 16),
-                    Container(
-                      margin: EdgeInsets.only(left: 25.0),
-                      child: Text(
-                        '장소',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 24,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '${data['month']}',
-                              style: TextStyle(
-                                fontSize: 17,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Container(
-                          width: 40,
-                          height: 24,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '${data['day']}',
-                              style: TextStyle(
-                                fontSize: 17,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    Container(
-                      width: 160,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '${data['place']}',
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Image.asset(
-                    'assets/images/${data['status']}.png',
-                    width: 62,
-                    height: 62,
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,  // 왼쪽 정렬
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 25.0),
+                            child: Text(
+                              '날짜',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Container(
+                            margin: EdgeInsets.only(left: 25.0),
+                            child: Text(
+                              '장소',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 40,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${data['month']}',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Container(
+                                width: 40,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${data['day']}',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 16),
+                          Container(
+                            width: 160,
+                            height: 24,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${data['place']}',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: Image.asset(
+                          'assets/images/${data['status']}.png',
+                          width: 62,
+                          height: 62,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            )
+                : Container(),
+          ),
+        ],
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: SchedulePage(),
-  ));
 }
