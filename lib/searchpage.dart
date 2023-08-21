@@ -142,18 +142,14 @@ class _SearchPageState extends State<SearchPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         onPressed: () {
-          
-          final response = http.post(
-            Uri.parse('http://192.168.0.121:5000/add'),
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
-            body: jsonEncode(<String, String>{
-              'month':selectedDate.month ,
-              'day':selectedDate.day ,
-              'place':_searchController.text,
-            }),
-          );    
+               
+          Future<void> _searchPlace() async {
+          String url =
+              'http://192.168.0.121:5000/add?date=${selectedDate.toString()}&place=$_searchController.text';
+
+          final response = await http.get(Uri.parse(url));
+
+        }
 
           if (_searchController.text.isNotEmpty && selectedDate != null) {
             Navigator.push(

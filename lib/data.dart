@@ -2,32 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:async';
 
 class DataPage extends StatelessWidget {
   final String location;
   final DateTime date;
+  var status;
+  var past_data;
+  var user_data;
+  var weather;
 
   DataPage(required location, required date){
     this.location = location;
     this.date = date;
 
-    var username = 'HackKuthon2023'
-    var session = ''
-    var response = await http.post(
-      Uri.parse('http://192.168.0.121:5000/get_place_data'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'month':selectedDate.month ,
-        'day':selectedDate.day ,
-        'place':_searchController.text,
-      }),
-    );
+    Future<void> _searchPlace() async {
+    String url =
+        'http://192.168.0.121:5000/get_place_data?date=${selectedDate.toString()}&place=$_searchController.text';
 
-    String responseBody = utf8.decode(response.bodyBytes);
-    List<dynamic> list = jsonDecode(responseBody);
-    print(list);
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      Map<String, dynamic> result = json.decode(response.body);
+      print('Result from Google API: $result');  // 결과 로깅
+
+      // 결과 배열이 비어있는지 확인
+      if (result['status'].isNotEmpty) {
+        this.status = result['status'];
+        this.past_data = result['past_data'];
+        this.user_data = result['user_data'];
+        this.weather = result['weather'];
+      } else {
+        print('No candidates found');  // 결과가 없을 경우 로깅
+      }
+    } else {
+      print('Failed to search for place');
+    }
+
+  }
   };
 
   @override
