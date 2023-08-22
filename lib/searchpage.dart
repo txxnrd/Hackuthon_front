@@ -14,7 +14,7 @@ class _SearchPageState extends State<SearchPage> {
   GoogleMapController? _mapController;
   TextEditingController _searchController = TextEditingController();
   DateTime? selectedDate;
-  String googleAPIKey = "AIzaSyDMTx4E4-eVsH4OGR2cNdidSLmcMEyKT1c"; // Google API 키를 여기에 입력해 주세요.
+  String googleAPIKey = "secret"; // Google API 키를 여기에 입력해 주세요.
 
   LatLng _initialPosition = LatLng(37.5665, 126.9780); // 초기 위치
 
