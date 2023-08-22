@@ -1,18 +1,11 @@
-# Hackuthon_front
-
-## 2023 고려대학교 해커톤 KU_hackuton 2등 수상작 "눈치"
-
----
-
-## 한강 이용자수 예측을 통한 눈치게임 대성공 앱
-
+# 2023 고려대학교 해커톤 KU_hackuton 2등 수상작 "눈치"
 
 ![](assets/images/logo.png)
 
 인파가 몰릴 것으로 예상된 곳에 갔는데 사람이 생각보다 없다면?
 이것이 소확행 아닐까
 
-![](assets/images/눈치 Readme 자료_1.png)
+![](assets/images/readme_1.png)
 
 
 앱의 기능은 다음과 같다.
